@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['moviesite101.herokuapp.com', 'localhost']
 
 INSTALLED_APPS = [
     'Main.apps.MainConfig',
+    'widget_tweaks',
     'Accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
