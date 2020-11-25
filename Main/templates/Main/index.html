@@ -1,0 +1,95 @@
+{% extends 'main/base.html' %}
+{% load widget_tweaks %}
+{% block head %}
+<style>
+  .form-control-width {
+    width: 15%;
+    display: inline-block
+  }
+
+  .round {
+    border-radius: 10%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col">
+    <div class="card card-body">
+
+      <form method="get">
+        Name:
+        {{myFilter.form.name|add_class:"form-control form-control-width" }}
+        Director:
+        {{myFilter.form.director|add_class:"form-control form-control-width" }}
+        Cast:
+        {{myFilter.form.cast|add_class:"form-control form-control-width" }}
+        Category:
+        {{myFilter.form.category|add_class:"form-control form-control-width" }}
+
+        <button class="btn btn-primary round" type="submit">Search</button>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+<div class="container">
+  <br>
+  <div class="card" id="backdrop">
+    <div class="card-body">
+      <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="text-center">
+                <img src="{{ movie.image }}" alt="" class="img-fluid" width="75%">
+                <h3 class="text-center">{{ movie.name }}</h3>
+
+                <i class="text-center">{{ movie.release_date }}</i>
+                <a href="{% url 'main:detail' movie.id %}">Read More</a>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+
+    </div>
+    
+    <div class="pagination" style='margin:0 auto;'>
+      <span class="step-links">
+
+
+        {% if movies.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ movies.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% for num in movies.paginator.page_range %}
+        {% if movies.number == num %}
+        <a class="btn btn-info mb-4 round" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > movies.number|add:'-3' and num < movies.number|add:'3' %}
+        <a class="btn btn-outline-info mb-4 round" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if movies.has_next %}
+        <a class="btn btn-outline-info mb-4 round" href="?page={{ movies.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4 round" href="?page={{ movies.paginator.num_pages }}">Last</a>
+        {% endif %}
+
+
+      </span>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
