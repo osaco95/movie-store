@@ -1,1 +1,1 @@
-web: gunicorn Movies_Site Movies_Site.wsgi
+web: gunicorn --pythonpath Movies_Site Movies_Site.wsgi --log-file -
