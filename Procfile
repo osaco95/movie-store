@@ -1,1 +1,2 @@
-web:gunicorn Movies_Site.wsgi 
+web: gunicorn Movies_Site.wsgi
+
